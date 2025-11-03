@@ -61,43 +61,85 @@ namespace AutomatizacionPOM.StepDefinitions
         [When("ingresar fecha de envio {string}")]
         public void WhenIngresarFechaDeEnvio(string fechaEnvio)
         {
-            if (!string.IsNullOrWhiteSpace(fechaEnvio))
-            {
-                DateTime fechaIngresada;
-                if (DateTime.TryParse(fechaEnvio, out fechaIngresada))
-                {
-                    if (fechaIngresada <= DateTime.Today)
-                    {
-                        registroCompraPage.IngresarFechaEnvio(fechaEnvio);
-                    }
-                    else
-                    {
-                        throw new ArgumentException($"La fecha de envío '{fechaEnvio}' no puede ser futura.");
-                    }
-                }
-                else
-                {
-                    throw new FormatException($"La fecha '{fechaEnvio}' no tiene un formato válido (usa dd/MM/yyyy).");
-                }
-            }
-            else
-            {
-                Console.WriteLine("No se ingresó fecha de envío, se usará la fecha actual por defecto.");
-            }
+            
         }
 
 
         [When("seleccionar el tipo de documento {string}")]
         public void WhenSeleccionarElTipoDeDocumento(string tipoDocumento)
         {
-            if (!string.IsNullOrWhiteSpace(tipoDocumento) && !tipoDocumento.Contains("(vacío)"))
-                registroCompraPage.SeleccionarTipoDocumento(tipoDocumento);
+            registroCompraPage.SeleccionarTipoDocumento(tipoDocumento);
         }
 
         [When("ingresar una serie {string}")]
         public void WhenIngresarUnaSerie(string serie)
         {
             registroCompraPage.IngresarSerie(serie);
+        }
+        [When("ingresar el numero de documento {string}")]
+        public void WhenIngresarElNumeroDeDocumento(string numeroDoc)
+        {
+            registroCompraPage.IngresarNumeroDocumento(numeroDoc);
+        }
+
+        [When("ingresar una observacion {string}")]
+        public void WhenIngresarUnaObservacion(string observacion)
+        {
+            registroCompraPage.IngresarObservacion(observacion);
+        }
+
+        [When("selecciona el tipo de entrega")]
+        public void WhenSeleccionaElTipoDeEntrega(string tipoEntrega)
+        {
+            registroCompraPage.SeleccionarTipoEntrega(tipoEntrega);
+        }
+
+        [When("selecciona un tipo de almacenes destino")]
+        public void WhenSeleccionaUnTipoDeAlmacenesDestino(string tipoAlmacen)
+        {
+            registroCompraPage.SeleccionarAlmacenDestino(tipoAlmacen);
+        }
+
+        [When("seleccion un rol {string}")]
+        public void WhenSeleccionUnRol(string rol)
+        {
+            registroCompraPage.SeleccionarRol(rol);
+        }
+
+        [When("selecciona un alamacen {string}")]
+        public void WhenSeleccionaUnAlamacen(string almacen)
+        {
+            registroCompraPage.SeleccionarAlmacen(almacen);
+        }
+
+        [When("selecciona un tipo de pago")]
+        public void WhenSeleccionaUnTipoDePago()
+        {
+            registroCompraPage.SeleccionarTipoPago();
+        }
+
+        [When("selecciona un sub_tipo de pago")]
+        public void WhenSeleccionaUnSub_TipoDePago()
+        {
+            registroCompraPage.SeleccionarSubTipoPago();
+        }
+
+        [When("ingresa la cantidad del metodo de pago {string}")]
+        public void WhenIngresaLaCantidadDelMetodoDePago(string metodoPago)
+        {
+            registroCompraPage.IngresarCantidadMetodoPago(metodoPago);
+        }
+
+        [When("selecciona el tipo de compra")]
+        public void WhenSeleccionaElTipoDeCompra()
+        {
+            registroCompraPage.SeleccionarTipoCompra();
+        }
+
+        [Then("la compra se completo correctamente")]
+        public void ThenLaCompraSeCompletoCorrectamente()
+        {
+            throw new PendingStepException();
         }
 
     }

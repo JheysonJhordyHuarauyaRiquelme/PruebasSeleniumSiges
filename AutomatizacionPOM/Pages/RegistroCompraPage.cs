@@ -28,8 +28,25 @@ namespace AutomatizacionPOM.Pages
         //
         public static readonly By nmrProveedor = By.XPath("//input[@id='DocumentoIdentidad']");
         public static readonly By nmrFechaEnvio = By.XPath("//input[@id='fechaRegistro']");
-        public IWebElement SelectDocumento => driver.FindElement(By.XPath("//span[contains(@class,'select2-selection--single')]"));
-        public static readonly By nmrSerie = By.XPath("//label[text()='SERIE']/following-sibling::input");
+        public static readonly By slctDocumento = By.XPath("//body/div[1]/div/section/div/div/div/form/div[1]/div[1]/div[2]/div/div[3]/span/span[1]/span");
+        public static readonly By OptionFactura = By.XPath("//li[contains(text(),'FACTURA')]");
+        public static readonly By OptionBoleta = By.XPath("//li[contains(text(),'BOLETA')]");
+        public static readonly By nmrSerie = By.XPath("//body/div[1]/div/section/div/div/div/form/div[1]/div[1]/div[2]/div/div[5]/input");
+        public static readonly By nmrNumeroDocumento = By.XPath("//body/div[1]/div/section/div/div/div/form/div[1]/div[1]/div[2]/div/div[6]/input");
+        public static readonly By txtObseracion = By.XPath("//div[@class='panel-body no-pad-top']//textarea[@id='observacion']");
+        public static readonly By slctTipoEntregaInmediata = By.XPath("//input[@id='radioEntrega1']");
+        public static readonly By slctTipoEntregaDiferida = By.XPath("//input[@id='radioEntrega2']");
+        public static readonly By slctTipoAlmacenDestinoUno = By.XPath("//input[@id='radioEntrega3']");
+        public static readonly By slctTipoAlmacenDestinoVarios = By.XPath("//input[@id='radioEntrega4']");
+        public static readonly By slctRol = By.XPath("//span[@id='select2-rolConcepto-container']/ancestor::span[contains(@class,'select2-selection--single')]");
+        public static readonly By slctRolMercaderia = By.XPath("//li[contains(@id,'select2-rolConcepto-result') and contains(text(),'Mercaderia')]");
+        public static readonly By slctRolInsumo = By.XPath("//li[contains(@id,'select2-rolConcepto-result') and contains(text(),'Insumo')]");
+        public static readonly By slctAlmacen = By.XPath("");
+        public static readonly By slctTipoPago = By.XPath("");
+        public static readonly By slctSubTipoPago = By.XPath("");
+        public static readonly By nmrMontoPago = By.XPath("");
+        public static readonly By slctTipoCompra = By.XPath("");
+        public static readonly By slctGuardarCompra = By.XPath("");
 
 
 
@@ -82,57 +99,104 @@ namespace AutomatizacionPOM.Pages
 
         public void SeleccionarTipoDocumento(string tipoDocumento)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            var js = (IJavaScriptExecutor)driver;
+            utilities.ClickButton(slctDocumento);
+            Thread.Sleep(500);
 
-            // 1️⃣ Esperar el botón visible del select2
-            var select2 = wait.Until(d =>
-                d.FindElement(By.XPath("//span[contains(@class,'select2-selection--single')]")));
+            if (tipoDocumento.ToUpper().Contains("FACTURA"))
+                utilities.ClickButton(OptionFactura);
+            else if (tipoDocumento.ToUpper().Contains("BOLETA"))
+                utilities.ClickButton(OptionBoleta);
 
-            js.ExecuteScript("arguments[0].scrollIntoView(true);", select2);
-            js.ExecuteScript("arguments[0].click();", select2);
+            Thread.Sleep(500);
 
-            // 2️⃣ Esperar a que aparezca la lista (en cualquier parte del DOM)
-            wait.Until(d =>
-            {
-                var dropdowns = d.FindElements(By.XPath("//ul[contains(@class,'select2-results__options')]"));
-                return dropdowns.Any(dd => dd.Displayed);
-            });
 
-            // 3️⃣ Buscar la opción por texto visible
-            var option = wait.Until(d =>
-                d.FindElement(By.XPath($"//li[contains(@class,'select2-results__option') and normalize-space(text())='{tipoDocumento}']")));
-
-            js.ExecuteScript("arguments[0].click();", option);
-
-            Console.WriteLine($"✅ Documento '{tipoDocumento}' seleccionado correctamente.");
         }
-
-
-
 
         public void IngresarSerie(string serie)
         {
-            try
-            {
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-
-                IWebElement input = wait.Until(d =>
-                {
-                    var element = d.FindElement(nmrSerie);
-                    return (element.Displayed && element.Enabled) ? element : null;
-                });
-
-                input.Clear();
-                input.SendKeys(serie);
-                Console.WriteLine($"Serie '{serie}' ingresada correctamente.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al ingresar la serie: {ex.Message}");
-            }
+            utilities.ClearAndEnterText(nmrSerie, serie);
         }
 
+        public void IngresarNumeroDocumento(string numeroDoc)
+        {
+            utilities.ClearAndEnterText(nmrNumeroDocumento, numeroDoc);
+        }
+        public void IngresarObservacion(string observacion)
+        {
+            utilities.ClearAndEnterText(txtObseracion, observacion);
+        }
+        public void SeleccionarTipoEntrega(string tipoEntrega)
+        {
+            if (tipoEntrega.Equals("INMEDIATA", StringComparison.OrdinalIgnoreCase))
+            {
+                utilities.ClickButton(slctTipoEntregaInmediata);
+            }
+            else if (tipoEntrega.Equals("DIFERIDA", StringComparison.OrdinalIgnoreCase))
+            {
+                utilities.ClickButton(slctTipoEntregaDiferida);
+            }
+            else
+            {
+                throw new ArgumentException("Tipo de entrega no válido. Usa 'INMEDIATA' o 'DIFERIDA'.");
+            }
 
+            Thread.Sleep(500);
+        }
+        public void SeleccionarAlmacenDestino(string tipoAlmacen)
+        {
+            if (tipoAlmacen.Equals("UNO", StringComparison.OrdinalIgnoreCase))
+            {
+                utilities.ClickButton(slctTipoAlmacenDestinoUno);
+            }
+            else if (tipoAlmacen.Equals("VARIOS", StringComparison.OrdinalIgnoreCase))
+            {
+                utilities.ClickButton(slctTipoAlmacenDestinoVarios);
+            }
+            else
+            {
+                throw new ArgumentException("Tipo de almacén no válido. Usa 'UNO' o 'VARIOS'.");
+            }
+
+            Thread.Sleep(500);
+        }
+        public void SeleccionarRol(string rol)
+        {
+            utilities.ClickButton(slctRol);
+            Thread.Sleep(500);
+
+            if (rol.Equals("Mercaderia", StringComparison.OrdinalIgnoreCase))
+                utilities.ClickButton(slctRolMercaderia);
+            else if (rol.Equals("Insumo", StringComparison.OrdinalIgnoreCase))
+                utilities.ClickButton(slctRolInsumo);
+            else
+                throw new ArgumentException("Rol no válido. Usa 'Mercaderia' o 'Insumo'.");
+
+            Thread.Sleep(500);
+        }
+        public void SeleccionarAlmacen(string almacen)
+        {
+            utilities.ClickButton(slctAlmacen);
+            utilities.SelectOption(slctAlmacen, almacen);
+        }
+        public void SeleccionarTipoPago()
+        {
+            utilities.ClickButton(slctTipoPago);
+        }
+        public void SeleccionarSubTipoPago()
+        {
+            utilities.ClickButton(slctSubTipoPago);
+        }
+        public void IngresarCantidadMetodoPago(string montoPago)
+        {
+            utilities.ClearAndEnterText(nmrMontoPago, montoPago);
+        }
+        public void SeleccionarTipoCompra()
+        {
+            utilities.ClickButton(slctTipoCompra);
+        }
+        public void GuardarCompra()
+        {
+            utilities.ClickButton(slctGuardarCompra);
+        }
     }
 }
