@@ -1,4 +1,5 @@
 using AutomatizacionPOM.Pages;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
 using System;
@@ -64,7 +65,6 @@ namespace AutomatizacionPOM.StepDefinitions
             
         }
 
-
         [When("seleccionar el tipo de documento {string}")]
         public void WhenSeleccionarElTipoDeDocumento(string tipoDocumento)
         {
@@ -88,58 +88,34 @@ namespace AutomatizacionPOM.StepDefinitions
             registroCompraPage.IngresarObservacion(observacion);
         }
 
-        [When("selecciona el tipo de entrega")]
-        public void WhenSeleccionaElTipoDeEntrega(string tipoEntrega)
+        [When("seleccionar opcion de rol {string}")]
+        public void WhenSeleccionarOpcionDeRol(string opcionRol)
         {
-            registroCompraPage.SeleccionarTipoEntrega(tipoEntrega);
+            registroCompraPage.SeleccionarOpcionRol(opcionRol);
         }
 
-        [When("selecciona un tipo de almacenes destino")]
-        public void WhenSeleccionaUnTipoDeAlmacenesDestino(string tipoAlmacen)
+        [When("selecciona un tipo de pago {string}")]
+        public void WhenSeleccionaUnTipoDePago(string tipoPago)
         {
-            registroCompraPage.SeleccionarAlmacenDestino(tipoAlmacen);
+            registroCompraPage.SeleccionarTipoPago(tipoPago);
         }
 
-        [When("seleccion un rol {string}")]
-        public void WhenSeleccionUnRol(string rol)
+        [When("ingresa la observacion del metodo de pago {string}")]
+        public void WhenIngresaLaObservacionDelMetodoDePago(string observacionPago)
         {
-            registroCompraPage.SeleccionarRol(rol);
+            registroCompraPage.IngresarObservacionMetodoPago(observacionPago);
         }
 
-        [When("selecciona un alamacen {string}")]
-        public void WhenSeleccionaUnAlamacen(string almacen)
+        [When("selecciona el tipo de compra {string}")]
+        public void WhenSeleccionaElTipoDeCompra(string tipoCompra)
         {
-            registroCompraPage.SeleccionarAlmacen(almacen);
-        }
-
-        [When("selecciona un tipo de pago")]
-        public void WhenSeleccionaUnTipoDePago()
-        {
-            registroCompraPage.SeleccionarTipoPago();
-        }
-
-        [When("selecciona un sub_tipo de pago")]
-        public void WhenSeleccionaUnSub_TipoDePago()
-        {
-            registroCompraPage.SeleccionarSubTipoPago();
-        }
-
-        [When("ingresa la cantidad del metodo de pago {string}")]
-        public void WhenIngresaLaCantidadDelMetodoDePago(string metodoPago)
-        {
-            registroCompraPage.IngresarCantidadMetodoPago(metodoPago);
-        }
-
-        [When("selecciona el tipo de compra")]
-        public void WhenSeleccionaElTipoDeCompra()
-        {
-            registroCompraPage.SeleccionarTipoCompra();
+            registroCompraPage.SeleccionarTipoCompra(tipoCompra);
         }
 
         [Then("la compra se completo correctamente")]
         public void ThenLaCompraSeCompletoCorrectamente()
         {
-            throw new PendingStepException();
+            registroCompraPage.GuardarCompra();
         }
 
     }

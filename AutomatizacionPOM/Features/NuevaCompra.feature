@@ -1,7 +1,7 @@
 ﻿Feature: NuevaCompra
 
 Background: 
-Given el usuario ingresa al ambiente 'http://161.132.67.82:31097/'
+Given el usuario ingresa al ambiente 'http://161.132.67.82:31096/'
 When el usuario inicia sesión con usuario 'admin@plazafer.com' y contraseña 'calidad'
 And accede al módulo 'Compra'
 And accede al submódulo 'Nueva Compra'
@@ -19,6 +19,12 @@ Scenario: Registro de una nueva compra
 	And ingresar fecha de envio ''
 	And seleccionar el tipo de documento 'BOLETA DE VENTA ELECTRONICA'
 	And ingresar una serie '0001'
+	And ingresar el numero de documento '00000001'
+	And ingresar una observacion 'Ninguna Observacion'
+	And seleccionar opcion de rol 'Mercaderia'
+	And selecciona un tipo de pago 'EF'
+	And ingresa la observacion del metodo de pago 'Ninguna observacion'
+	And selecciona el tipo de compra 'G'
 	Then la compra se completo correctamente
 
 

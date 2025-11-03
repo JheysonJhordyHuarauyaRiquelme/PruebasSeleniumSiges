@@ -4,5 +4,5 @@ A short summary of the feature
 
 @InicioSesion
 Scenario: Inicio de sesion exitoso
-    Given el usuario ingresa al ambiente 'http://161.132.67.82:31097/'
+    Given el usuario ingresa al ambiente 'http://161.132.67.82:31096/'
     When el usuario inicia sesión con usuario 'admin@plazafer.com' y contraseña 'calidad'

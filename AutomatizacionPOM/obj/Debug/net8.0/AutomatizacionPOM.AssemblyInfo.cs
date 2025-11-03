@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutomatizacionPOM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ebfea531f8ec312da6726779f408eb97e01fb6f")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutomatizacionPOM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutomatizacionPOM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
