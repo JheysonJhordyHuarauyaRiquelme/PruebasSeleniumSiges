@@ -1,4 +1,5 @@
 ﻿using AutomatizacionPOM.Pages.Helpers;
+using Microsoft.CodeAnalysis;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -25,7 +26,6 @@ namespace AutomatizacionPOM.Pages
         public static readonly By nmrDescuento = By.XPath("//input[@ng-model='item.Descuento']");
         public static readonly By nmrFechaVencimineto = By.XPath("//input[@id='fechaVencimiento-0']");
         public static readonly By nmrFlete = By.XPath("//input[@id='flete']");
-        //
         public static readonly By nmrProveedor = By.XPath("//input[@id='DocumentoIdentidad']");
         public static readonly By nmrFechaEnvio = By.XPath("//input[@id='fechaRegistro']");
         public static readonly By slctDocumento = By.XPath("//body/div[1]/div/section/div/div/div/form/div[1]/div[1]/div[2]/div/div[3]/span/span[1]/span");
@@ -34,22 +34,20 @@ namespace AutomatizacionPOM.Pages
         public static readonly By nmrSerie = By.XPath("//body/div[1]/div/section/div/div/div/form/div[1]/div[1]/div[2]/div/div[5]/input");
         public static readonly By nmrNumeroDocumento = By.XPath("//body/div[1]/div/section/div/div/div/form/div[1]/div[1]/div[2]/div/div[6]/input");
         public static readonly By txtObseracion = By.XPath("//div[@class='panel-body no-pad-top']//textarea[@id='observacion']");
-        public static readonly By slctTipoEntregaInmediata = By.XPath("//input[@id='radioEntrega1']");
-        public static readonly By slctTipoEntregaDiferida = By.XPath("//input[@id='radioEntrega2']");
-        public static readonly By slctTipoAlmacenDestinoUno = By.XPath("//input[@id='radioEntrega3']");
-        public static readonly By slctTipoAlmacenDestinoVarios = By.XPath("//input[@id='radioEntrega4']");
-        public static readonly By slctRol = By.XPath("//span[@id='select2-rolConcepto-container']/ancestor::span[contains(@class,'select2-selection--single')]");
-        public static readonly By slctRolMercaderia = By.XPath("//li[contains(@id,'select2-rolConcepto-result') and contains(text(),'Mercaderia')]");
-        public static readonly By slctRolInsumo = By.XPath("//li[contains(@id,'select2-rolConcepto-result') and contains(text(),'Insumo')]");
-        public static readonly By slctAlmacen = By.XPath("");
-        public static readonly By slctTipoPago = By.XPath("");
-        public static readonly By slctSubTipoPago = By.XPath("");
-        public static readonly By nmrMontoPago = By.XPath("");
-        public static readonly By slctTipoCompra = By.XPath("");
-        public static readonly By slctGuardarCompra = By.XPath("");
-
-
-
+        public static readonly By OptionMercaderia = By.XPath("//select[@id='rolConcepto']/option[text()='Mercaderia']");
+        public static readonly By OptionInsumo = By.XPath("//select[@id='rolConcepto']/option[text()='Insumo']");
+        public static readonly By slctTipoPago = By.XPath("//div[@class='d-flex']//input[@id='radio1']");
+        public static readonly By OptionDepCu = By.XPath("//label[@id='labelMedioPago-0-14']");
+        public static readonly By OptionTransferencia = By.XPath("//label[@id='labelMedioPago-0-16']");
+        public static readonly By OptionTDebito = By.XPath("//label[@id='labelMedioPago-0-18']");
+        public static readonly By OptionTCredito = By.XPath("//label[@id='labelMedioPago-0-19']");
+        public static readonly By OptionEfectivo = By.XPath("//label[@id='labelMedioPago-0-281']");
+        public static readonly By txtObservacionPago = By.XPath("//div[@class='box box-primary box-solid']//textarea[@id='observacion']");
+        public static readonly By OptionExoneradasIGV = By.XPath("//input[@id='radio-1']");
+        public static readonly By OptionGravadas = By.XPath("//input[@id='radio-2']");
+        public static readonly By OptionNoGravadas = By.XPath("//input[@id='radio-3']");
+        public static readonly By OptionGravadasYnoGravadas = By.XPath("//input[@id='radio-4']");
+        public static readonly By slctGuardarCompra = By.XPath("//button[contains(text(),'GUARDAR COMPRA')]");
 
         //public static readonly By TypeDocumentField = By.XPath("//body/div[@id='wrapper']/div[1]/section[1]/div[1]/div[1]/div[1]/form[1]/div[2]/facturacion-venta[1]/form[1]/div[1]/div[2]/div[1]/div[6]/selector-comprobante[1]/div[1]/ng-form[1]/div[1]/div[1]/span[1]/span[1]/span[1]");
         //public static readonly By PaymentInformation = By.XPath("//div[@class='box box-primary box-solid']//textarea[@id='informacion']");
@@ -125,74 +123,53 @@ namespace AutomatizacionPOM.Pages
         {
             utilities.ClearAndEnterText(txtObseracion, observacion);
         }
-        public void SeleccionarTipoEntrega(string tipoEntrega)
+        public void SeleccionarOpcionRol(string opcionRol)
         {
-            if (tipoEntrega.Equals("INMEDIATA", StringComparison.OrdinalIgnoreCase))
+            By rolConceptoXPath = opcionRol.ToUpper() switch
             {
-                utilities.ClickButton(slctTipoEntregaInmediata);
-            }
-            else if (tipoEntrega.Equals("DIFERIDA", StringComparison.OrdinalIgnoreCase))
+                "MERCADERIA" => OptionMercaderia,
+                "INSUMO" => OptionInsumo,
+                _ => throw new ArgumentException("Rol de concepto no válido", nameof(opcionRol))
+            };
+            utilities.ClickButton(rolConceptoXPath);
+        }
+        public void SeleccionarTipoPago(string tipoPago)
+        {
+            By tipoPagoXPath = tipoPago.ToUpper() switch
             {
-                utilities.ClickButton(slctTipoEntregaDiferida);
-            }
-            else
-            {
-                throw new ArgumentException("Tipo de entrega no válido. Usa 'INMEDIATA' o 'DIFERIDA'.");
-            }
+                "DEP-CU" => OptionDepCu,
+                "TRANFON" => OptionTransferencia,
+                "TDEB" => OptionTDebito,
+                "TCRE" => OptionTCredito,
+                "EF" => OptionEfectivo,
+                _ => throw new ArgumentException("Tipo de pago no válido", nameof(tipoPago))
+            };
+            utilities.ClickButton(tipoPagoXPath);
+        }
 
-            Thread.Sleep(500);
-        }
-        public void SeleccionarAlmacenDestino(string tipoAlmacen)
+        public void IngresarObservacionMetodoPago(string observacionPago)
         {
-            if (tipoAlmacen.Equals("UNO", StringComparison.OrdinalIgnoreCase))
+            utilities.ClearAndEnterText(txtObservacionPago, observacionPago);
+        }
+        public void SeleccionarTipoCompra(string tipoCompra)
+        {
+            switch (tipoCompra.ToUpper())
             {
-                utilities.ClickButton(slctTipoAlmacenDestinoUno);
+                case "EXONERADAS IGV":
+                    utilities.ClickButton(OptionExoneradasIGV);  
+                    break;
+                case "G":
+                    utilities.ClickButton(OptionGravadas);  
+                    break;
+                case "NG":
+                    utilities.ClickButton(OptionNoGravadas);  
+                    break;
+                case "G Y NG":
+                    utilities.ClickButton(OptionGravadasYnoGravadas);  
+                    break;
+                default:
+                    throw new ArgumentException("Opción no válida", nameof(tipoCompra));
             }
-            else if (tipoAlmacen.Equals("VARIOS", StringComparison.OrdinalIgnoreCase))
-            {
-                utilities.ClickButton(slctTipoAlmacenDestinoVarios);
-            }
-            else
-            {
-                throw new ArgumentException("Tipo de almacén no válido. Usa 'UNO' o 'VARIOS'.");
-            }
-
-            Thread.Sleep(500);
-        }
-        public void SeleccionarRol(string rol)
-        {
-            utilities.ClickButton(slctRol);
-            Thread.Sleep(500);
-
-            if (rol.Equals("Mercaderia", StringComparison.OrdinalIgnoreCase))
-                utilities.ClickButton(slctRolMercaderia);
-            else if (rol.Equals("Insumo", StringComparison.OrdinalIgnoreCase))
-                utilities.ClickButton(slctRolInsumo);
-            else
-                throw new ArgumentException("Rol no válido. Usa 'Mercaderia' o 'Insumo'.");
-
-            Thread.Sleep(500);
-        }
-        public void SeleccionarAlmacen(string almacen)
-        {
-            utilities.ClickButton(slctAlmacen);
-            utilities.SelectOption(slctAlmacen, almacen);
-        }
-        public void SeleccionarTipoPago()
-        {
-            utilities.ClickButton(slctTipoPago);
-        }
-        public void SeleccionarSubTipoPago()
-        {
-            utilities.ClickButton(slctSubTipoPago);
-        }
-        public void IngresarCantidadMetodoPago(string montoPago)
-        {
-            utilities.ClearAndEnterText(nmrMontoPago, montoPago);
-        }
-        public void SeleccionarTipoCompra()
-        {
-            utilities.ClickButton(slctTipoCompra);
         }
         public void GuardarCompra()
         {

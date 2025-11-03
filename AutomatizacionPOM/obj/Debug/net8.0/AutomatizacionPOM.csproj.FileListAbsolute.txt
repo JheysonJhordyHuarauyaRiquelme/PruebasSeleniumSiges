@@ -296,3 +296,4 @@ C:\Users\Usuario\Downloads\Compra - Nueva Compra\TallerTsol\AutomatizacionPOM\ob
 C:\Users\Usuario\Downloads\Compra - Nueva Compra\TallerTsol\AutomatizacionPOM\obj\Debug\net8.0\AutomatizacionPOM.pdb
 C:\Users\Usuario\Downloads\Compra - Nueva Compra\TallerTsol\AutomatizacionPOM\obj\Debug\net8.0\AutomatizacionPOM.genruntimeconfig.cache
 C:\Users\Usuario\Downloads\Compra - Nueva Compra\TallerTsol\AutomatizacionPOM\obj\Debug\net8.0\ref\AutomatizacionPOM.dll
+C:\Users\Usuario\Downloads\Compra - Nueva Compra\TallerTsol\AutomatizacionPOM\obj\Debug\net8.0\AutomatizacionPOM.sourcelink.json

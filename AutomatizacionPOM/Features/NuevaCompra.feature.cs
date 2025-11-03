@@ -86,7 +86,7 @@ namespace AutomatizacionPOM.Features
 #line 3
 #line hidden
 #line 4
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'http://161.132.67.82:31097/\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'http://161.132.67.82:31096/\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 5
 await testRunner.WhenAsync("el usuario inicia sesión con usuario \'admin@plazafer.com\' y contraseña \'calidad\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -152,6 +152,24 @@ await this.FeatureBackgroundAsync();
  await testRunner.AndAsync("ingresar una serie \'0001\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 22
+ await testRunner.AndAsync("ingresar el numero de documento \'00000001\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 23
+ await testRunner.AndAsync("ingresar una observacion \'Ninguna Observacion\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 24
+ await testRunner.AndAsync("seleccionar opcion de rol \'Mercaderia\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 25
+ await testRunner.AndAsync("selecciona un tipo de pago \'EF\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 26
+ await testRunner.AndAsync("ingresa la observacion del metodo de pago \'Ninguna observacion\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 27
+ await testRunner.AndAsync("selecciona el tipo de compra \'G\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 28
  await testRunner.ThenAsync("la compra se completo correctamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
